@@ -2,6 +2,7 @@
 
 namespace DistanceConverter {
     internal class Program {
+        // コマンドライン引数で指定された範囲のフィートとメートルの対応表を出力
         static void Main(string[] args) {
 
             int start = int.Parse(args[1]);//始点
@@ -9,15 +10,14 @@ namespace DistanceConverter {
             if (args.Length >= 1 && args[0].Equals("-tom")) { 
                 //フィートからメートルへの対応表を出力
                 FeetToMeterList(start, end);
-            }
-            if (args[0].Equals("-tof")) {
+            }else if (args[0].Equals("-tof")) {
                 //メートルからフィートへの対応表を出力
                 MeterToFeetList(start, end);
             }
 
         }
         static void FeetToMeterList(int start, int end) {
-            //Console.Write("何ftから?:");//
+            //Console.Write("何ftから?:");//入力用
             //int start = int.Parse(Console.ReadLine());
             //Console.Write("何ftまで?:");
             //int end = int.Parse(Console.ReadLine());
@@ -27,7 +27,7 @@ namespace DistanceConverter {
             }
         }
         static void MeterToFeetList(int start, int end) {
-            //Console.Write("何mから?:");
+            //Console.Write("何mから?:");//入力用
             //int start = int.Parse(Console.ReadLine());
             //Console.Write("何mまで?:");
             //int end = int.Parse(Console.ReadLine());
