@@ -1,0 +1,40 @@
+﻿using System;
+
+namespace DistanceConverter {
+    internal class Program {
+        static void Main(string[] args) {
+
+            int start = int.Parse(args[1]);//始点
+            int end = int.Parse(args[2]);//終点
+            if (args.Length >= 1 && args[0].Equals("-tom")) { 
+                //フィートからメートルへの対応表を出力
+                FeetToMeterList(start, end);
+            }
+            if (args[0].Equals("-tof")) {
+                //メートルからフィートへの対応表を出力
+                MeterToFeetList(start, end);
+            }
+
+        }
+        static void FeetToMeterList(int start, int end) {
+            //Console.Write("何ftから?:");//
+            //int start = int.Parse(Console.ReadLine());
+            //Console.Write("何ftまで?:");
+            //int end = int.Parse(Console.ReadLine());
+            for (int feet = start; feet <= end; feet++) {
+                double meter = feet * 0.3048;
+                Console.WriteLine($"{feet}ft = {meter:0.0000}m");
+            }
+        }
+        static void MeterToFeetList(int start, int end) {
+            //Console.Write("何mから?:");
+            //int start = int.Parse(Console.ReadLine());
+            //Console.Write("何mまで?:");
+            //int end = int.Parse(Console.ReadLine());
+            for (int meter = start; meter <= end; meter++) {
+                double feet = meter / 0.3048;
+                Console.WriteLine($"{meter}m = {feet:0.0000}ft");
+            }
+        }
+    }
+}
