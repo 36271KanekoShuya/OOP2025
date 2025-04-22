@@ -7,15 +7,16 @@ namespace DistanceConverter {
 
             int start = int.Parse(args[1]);//始点
             int end = int.Parse(args[2]);//終点
-            if (args.Length >= 1 && args[0].Equals("-tom")) { 
+            if (args.Length >= 1 && args[0].Equals("-tom")) {
                 //フィートからメートルへの対応表を出力
-                FeetToMeterList(start, end);
+                FeetConverter FeetToMeterList = new FeetConverter();
             }else if (args[0].Equals("-tof")) {
                 //メートルからフィートへの対応表を出力
-                MeterToFeetList(start, end);
+                FeetConverter MeterToFeetList = new FeetConverter();
             }
 
         }
+#if(false)
         static void FeetToMeterList(int start, int end) {
             //Console.Write("何ftから?:");//入力用
             //int start = int.Parse(Console.ReadLine());
@@ -36,5 +37,6 @@ namespace DistanceConverter {
                 Console.WriteLine($"{meter}m = {feet:0.0000}ft");
             }
         }
+#endif
     }
 }
