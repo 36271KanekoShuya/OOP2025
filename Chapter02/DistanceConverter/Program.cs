@@ -9,21 +9,21 @@ namespace DistanceConverter {
             int end = int.Parse(args[2]);//終点
             if (args.Length >= 1 && args[0].Equals("-tom")) {
                 //フィートからメートルへの対応表を出力
-                FeetConverter FeetToMeterList = new FeetConverter();
-            }else if (args[0].Equals("-tof")) {
+                FeetToMeterList(start, end);
+            } else if (args[0].Equals("-tof")) {
                 //メートルからフィートへの対応表を出力
-                FeetConverter MeterToFeetList = new FeetConverter();
+                MeterToFeetList(start, end);
             }
 
         }
-#if(false)
         static void FeetToMeterList(int start, int end) {
             //Console.Write("何ftから?:");//入力用
             //int start = int.Parse(Console.ReadLine());
             //Console.Write("何ftまで?:");
             //int end = int.Parse(Console.ReadLine());
+            FeetConverter feettometer = new FeetConverter();
             for (int feet = start; feet <= end; feet++) {
-                double meter = feet * 0.3048;
+                double meter = feettometer.FeetToMeter(feet);
                 Console.WriteLine($"{feet}ft = {meter:0.0000}m");
             }
         }
@@ -32,11 +32,11 @@ namespace DistanceConverter {
             //int start = int.Parse(Console.ReadLine());
             //Console.Write("何mまで?:");
             //int end = int.Parse(Console.ReadLine());
+            FeetConverter metertofeet = new FeetConverter();
             for (int meter = start; meter <= end; meter++) {
-                double feet = meter / 0.3048;
+                double feet = metertofeet.MeterToFeet(meter);
                 Console.WriteLine($"{meter}m = {feet:0.0000}ft");
             }
         }
-#endif
     }
 }
