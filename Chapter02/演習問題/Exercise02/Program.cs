@@ -1,14 +1,35 @@
 ﻿namespace Exercise02 {
     internal class Program {
-        //1～10インチをメートルに変換
+        //インチをメートルに変換
         static void Main(string[] args) {
-            InchToMeterList(1, 10);
+            Console.Write("インチからメートルなら0,逆なら1を入力:");
+            int judge = int.Parse(Console.ReadLine());
+            Console.Write("何in/何mから?:");
+            int start = int.Parse(Console.ReadLine());
+            Console.Write("何in/何mまで?:");
+            int end = int.Parse(Console.ReadLine());
+            if (judge == 0) {
+                InchToMeterList(start, end);
+            } else if (judge == 1) {
+                MeterToInchList(start, end);
+            } else {
+                Console.WriteLine("エラー");
+            }
+
+
 
             //インチからメートルの対応表を出力
             static void InchToMeterList(int start, int end) {
                 for (int inch = start; inch <= end; inch++) {
                     double meter = InchConverter.InchToMeter(inch);
                     Console.WriteLine($"{inch}in = {meter:0.0000}m");
+                }
+            }
+            //メートルからインチの対応表を出力
+            static void MeterToInchList(int start, int end) {
+                for (int meter = start; meter <= end; meter++) {
+                    double inch = InchConverter.MeterToInch(meter);
+                    Console.WriteLine($"{meter}m = {inch:0.0000}in");
                 }
             }
         }

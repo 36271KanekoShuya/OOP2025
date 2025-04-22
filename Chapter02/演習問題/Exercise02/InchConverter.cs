@@ -5,10 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Exercise02 {
-    class InchConverter {
+    public class InchConverter {
+        private const double ratio = 0.0254;
         //インチからメートルを求める
         public static double InchToMeter(double inch) {
-            return inch * 0.0254;
+            return inch * ratio;
+        }
+        //インチからメートルを求める
+        public static double MeterToInch(double meter) {
+            return meter / ratio;
         }
     }
 }
