@@ -1,48 +1,32 @@
 ﻿namespace Exercise02 {
     internal class Program {
-        //インチとメートルを相互変換
+        //ヤードとメートルの相互変換
         static void Main(string[] args) {
-            Console.Write("インチからメートルなら0,逆なら1を入力:");
+            Console.WriteLine("ヤードからメートルなら0を入力");
+            Console.Write("メートルからヤードなら1を入力:");
             int judge = int.Parse(Console.ReadLine());
-            Console.Write("何in/何mから?:");
-            int start = int.Parse(Console.ReadLine());
-            Console.Write("何in/何mまで?:");
-            int end = int.Parse(Console.ReadLine());
             if (judge == 0) {
-                InchToMeterList(start, end);
+                Console.Write("変換前（ヤード）:");
+                int num = int.Parse(Console.ReadLine());
+                YardToMeterPrint(num);
             } else if (judge == 1) {
-                MeterToInchList(start, end);
+                Console.Write("変換前（メートル）:");
+                int num = int.Parse(Console.ReadLine());
+                MeterToYardPrint(num);
             } else {
                 Console.WriteLine("エラー");
             }
 
 
-
-            //インチからメートルの対応表を出力
-            static void InchToMeterList(int start, int end) {
-                if (start > end) {//降順での出力用
-                    for (int inch = start; inch >= end; inch--) {
-                        double meter = InchConverter.InchToMeter(inch);
-                        Console.WriteLine($"{inch}in = {meter:0.0000}m");
-                    }
-                }
-                for (int inch = start; inch <= end; inch++) {
-                    double meter = InchConverter.InchToMeter(inch);
-                    Console.WriteLine($"{inch}in = {meter:0.0000}m");
-                }
+            //ヤードからメートルの変換を出力
+            static void YardToMeterPrint(int yard) {
+                double meter = YardConverter.YardToMeter(yard);
+                Console.WriteLine($"変換後（メートル）:{meter:0.000}");
             }
-            //メートルからインチの対応表を出力
-            static void MeterToInchList(int start, int end) {
-                if (start > end) {//降順での出力用
-                    for (int meter = end; meter >= start; meter++) {
-                        double inch = InchConverter.MeterToInch(meter);
-                        Console.WriteLine($"{meter}m = {inch:0.0000}in");
-                    }
-                }
-                for (int meter = start; meter <= end; meter++) {
-                    double inch = InchConverter.MeterToInch(meter);
-                    Console.WriteLine($"{meter}m = {inch:0.0000}in");
-                }
+            //メートルからヤードの変換を出力
+            static void MeterToYardPrint(int meter) {
+                double yard = YardConverter.MeterToYard(meter);
+                Console.WriteLine($"変換後（ヤード）:{yard:0.000}");
             }
         }
     }

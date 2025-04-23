@@ -11,7 +11,7 @@ namespace Exercise02 {
         public static double InchToMeter(double inch) {
             return inch * ratio;
         }
-        //インチからメートルを求める
+        //メートルからインチを求める
         public static double MeterToInch(double meter) {
             return meter / ratio;
         }
