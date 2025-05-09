@@ -9,8 +9,8 @@ namespace SalesCalculator {
         private readonly List<Sale> _sales;
 
         //コンストラクタ
-        public SalesCounter(List<Sale> sales) {
-            _sales = sales;
+        public SalesCounter(string filePath) {
+            _sales = ReadSales(filePath);
         }
         //店舗別売り上げを求める
         public Dictionary<string, int> GetPerStoreSales() {
@@ -25,7 +25,7 @@ namespace SalesCalculator {
             return dict;
         }
         //売り上げデータを読み込み、Saleオブジェクトのリストを返す
-        public static List<Sale> ReadSales(string filePath) {
+        private List<Sale> ReadSales(string filePath) {
             //売り上げデータを入れるリストオブジェクトを作成
             List<Sale> sales = new List<Sale>();
             //ファイルを一斉読み込み
