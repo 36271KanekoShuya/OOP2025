@@ -21,7 +21,7 @@ namespace SalesCalculator {
         /// <returns></returns>
         public IDictionary<string, int> GetPerStoreSales() {
             var dict = new SortedDictionary<string, int>();
-            foreach (Sale sale in _sales) {
+            foreach (var sale in _sales) {
                 if (dict.ContainsKey(sale.ShopName)) {
                     dict[sale.ShopName] += sale.Amount;
                 } else {
@@ -37,12 +37,12 @@ namespace SalesCalculator {
         /// <returns></returns>
         private IEnumerable<Sale> ReadSales(string filePath) {
             //売り上げデータを入れるリストオブジェクトを作成
-            List<Sale> sales = new List<Sale>();
+            var sales = new List<Sale>();
             //ファイルを一斉読み込み
-            string[] lines = File.ReadAllLines(filePath);
-            foreach (string line in lines) {
+            var lines = File.ReadAllLines(filePath);
+            foreach (var line in lines) {
                 string[] items = line.Split(',');
-                Sale sale = new Sale() {
+                var sale = new Sale() {
                     ShopName = items[0],
                     ProductCategory = items[1],
                     Amount = int.Parse(items[2]),
