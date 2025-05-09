@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace SalesCalculator {
     public class SalesCounter {
-        private readonly List<Sale> _sales;
+        private readonly IEnumerable<Sale> _sales;
 
-        //コンストラクタ
+        /// <summary>
+        /// ReadSealsメソッドにリストを送るコンストラクタ
+        /// </summary>
+        /// <param name="filePath"></param>
         public SalesCounter(string filePath) {
             _sales = ReadSales(filePath);
         }
-        //店舗別売り上げを求める
-        public Dictionary<string, int> GetPerStoreSales() {
-            Dictionary<string, int> dict = new Dictionary<string, int>();
+        /// <summary>
+        /// 店舗別売り上げを求めるメソッド
+        /// </summary>
+        /// <returns></returns>
+        public IDictionary<string, int> GetPerStoreSales() {
+            var dict = new SortedDictionary<string, int>();
             foreach (Sale sale in _sales) {
                 if (dict.ContainsKey(sale.ShopName)) {
                     dict[sale.ShopName] += sale.Amount;
@@ -24,8 +30,12 @@ namespace SalesCalculator {
             }
             return dict;
         }
-        //売り上げデータを読み込み、Saleオブジェクトのリストを返す
-        private List<Sale> ReadSales(string filePath) {
+        /// <summary>
+        /// 売り上げデータを読み込み、Saleオブジェクトのリストを返すメソッド
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        private IEnumerable<Sale> ReadSales(string filePath) {
             //売り上げデータを入れるリストオブジェクトを作成
             List<Sale> sales = new List<Sale>();
             //ファイルを一斉読み込み
