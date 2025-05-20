@@ -37,17 +37,22 @@ namespace Exercise02 {
         }
 
         private static void Exercise2_2(List<string> names) {
-        
-            //ヒント
-           // names.Count( ここにラムダ式を記述する )
+            Console.WriteLine(names.Count(s => s.Contains('o')));
+           //                 names.Count( ここにラムダ式を記述する )
         }
 
         private static void Exercise2_3(List<string> names) {
-        
+            var places = names.Where(s => s.Contains('o')).ToArray();
+            foreach (var place in places) {
+                Console.WriteLine(place);
+            }
         }
 
         private static void Exercise2_4(List<string> names) {
-        
+            var lengths = names
+                .Where(s => s.StartsWith('B'))
+                .Select(s => s.Length).ToList();
+            lengths.ForEach(Console.WriteLine);
         }
     }
 }
