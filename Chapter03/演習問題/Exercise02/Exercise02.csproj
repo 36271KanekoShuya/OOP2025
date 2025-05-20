@@ -7,10 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="演習問題\**" />
-    <EmbeddedResource Remove="演習問題\**" />
-    <None Remove="演習問題\**" />
-  </ItemGroup>
-
 </Project>
