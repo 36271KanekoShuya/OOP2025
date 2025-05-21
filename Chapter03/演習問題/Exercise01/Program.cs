@@ -29,13 +29,11 @@ namespace Exercise01 {
         }
 
         private static void Exercise3(List<int> numbers) {
-            var fiftied = numbers.Where(s => s >= 50).ToList();
-            fiftied.ForEach(Console.WriteLine);
+            numbers.Where(s => s >= 50).ToList().ForEach(Console.WriteLine);
         }
 
         private static void Exercise4(List<int> numbers) {
-            var twiced = numbers.Select(s => s * 2).ToList();
-            twiced.ForEach(Console.WriteLine);
+            numbers.Select(s => s * 2).ToList().ForEach(Console.WriteLine);
         }
     }
 }
