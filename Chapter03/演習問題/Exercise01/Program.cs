@@ -21,7 +21,7 @@ namespace Exercise01 {
         }
 
         private static void Exercise1(List<int> numbers) {
-            Console.WriteLine(numbers.Exists(s => s % 8 == 0 || s % 9 == 0) ? "ある" : "ない");
+            Console.WriteLine(numbers.Exists(n => n % 8 == 0 || n % 9 == 0) ? "ある" : "ない");
         }
 
         private static void Exercise2(List<int> numbers) {
@@ -29,11 +29,11 @@ namespace Exercise01 {
         }
 
         private static void Exercise3(List<int> numbers) {
-            numbers.Where(s => s >= 50).ToList().ForEach(Console.WriteLine);
+            numbers.Where(n => n >= 50).ToList().ForEach(Console.WriteLine);
         }
 
         private static void Exercise4(List<int> numbers) {
-            numbers.Select(s => s * 2).ToList().ForEach(Console.WriteLine);
+            numbers.Select(n => n * 2).ToList().ForEach(Console.WriteLine);
         }
     }
 }
