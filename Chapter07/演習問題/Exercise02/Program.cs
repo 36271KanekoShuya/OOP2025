@@ -40,7 +40,8 @@ namespace Exercise02 {
 
         private static void Exercise1(List<Book> books) {
             var book = books.FirstOrDefault(x => x.Title == "ワンダフル・C#ライフ");
-            Console.WriteLine($"{book.Title}:{book.Pages}頁");
+            if (book is not null)
+                Console.WriteLine($"{book.Title}:{book.Pages}頁");
         }
 
         private static void Exercise2(List<Book> books) {
@@ -48,23 +49,27 @@ namespace Exercise02 {
         }
 
         private static void Exercise3(List<Book> books) {
-
+            Console.WriteLine(Math.Round(books.Where(x => x.Title.Contains("C#")).Average(x => x.Pages)));
         }
 
         private static void Exercise4(List<Book> books) {
-
+            var book = books.FirstOrDefault(x => x.Price >= 4000);
+            if (book is not null)
+                Console.WriteLine(book.Title);
         }
 
         private static void Exercise5(List<Book> books) {
-
+            Console.WriteLine(books.Where(x => x.Price < 4000).Max(x => x.Pages));
         }
 
         private static void Exercise6(List<Book> books) {
-
+            books.Where(x => x.Pages >= 400).OrderByDescending(x => x.Price)
+                .Select(x => $"{ x.Title} :{ x.Price}").ToList().ForEach(Console.WriteLine);
         }
 
         private static void Exercise7(List<Book> books) {
-
+            books.Where(x => x.Title.Contains("C#") && x.Pages <= 500)
+                .Select(X => X.Title).ToList().ForEach(Console.WriteLine);
         }
 
         public class Book {
