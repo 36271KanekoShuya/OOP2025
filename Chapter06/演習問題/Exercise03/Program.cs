@@ -59,7 +59,8 @@ namespace Exercise03 {
         }
         
         private static void Exercise6(string text) {
-            var lowtxt = text.ToLower();
+            Console.WriteLine("アルファベットの個数");
+            var lowtxt = text.ToLower().Replace(" ","");
             for(char chara = 'a';chara <= 'z'; chara++) {
                 Console.WriteLine($"{chara}:{text.Count(s => s == chara)}");
             }
