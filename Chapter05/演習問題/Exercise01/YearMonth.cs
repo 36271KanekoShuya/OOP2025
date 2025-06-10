@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace Exercise01 {
     //5.1.1
-    public record YearMonth {
-        public readonly int year;
-        public readonly int month;
+    public record YearMonth(int year, int month) {
+        public readonly int year = year;
+        public readonly int month = month;
 
-        public YearMonth(int year, int month) {
-            this.year = year;
-            this.month = month;
-        }
 
         //5.1.2
         //設定されている西暦が21世紀か判定する
