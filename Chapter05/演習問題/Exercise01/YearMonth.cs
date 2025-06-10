@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercise01 {
     //5.1.1
-    public class YearMonth {
+    public record YearMonth {
         public readonly int year;
         public readonly int month;
 
