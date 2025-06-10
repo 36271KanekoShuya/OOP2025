@@ -43,7 +43,7 @@ namespace Exercise02 {
             if (find21 is null) {
                 Console.WriteLine("21世紀のデータはありません");
             } else {
-                Console.WriteLine(find21);
+                Console.WriteLine($"{find21.year}年");
             }
         }
 
