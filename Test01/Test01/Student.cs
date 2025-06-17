@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Test01 {
     public class Student {
-        public string Name { get; private set; } = string.Empty;//学生の名前
-        public string Subject { get; private set; } = string.Empty;//科目名
-        public int Score { get; private set; }//点数
+        public string Name { get;  init; } = string.Empty;//学生の名前
+        public string Subject { get; init; } = string.Empty;//科目名
+        public int Score { get; init; }//点数
 
     }
 }
