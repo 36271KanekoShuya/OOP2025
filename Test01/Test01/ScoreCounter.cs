@@ -28,11 +28,15 @@
 
         //メソッドの概要： 
         public IDictionary<string, int> GetPerStudentScore() {
-
-
-
-
-
+            var dict = new SortedDictionary<string, int>();
+            foreach (var score in _score) {
+                if (dict.ContainsKey(score.Subject)) {
+                    dict[score.Subject] += score.Score;
+                } else {
+                    dict[score.Subject] = score.Score;
+                }
+            }
+            return dict;
         }
     }
 }
