@@ -9,6 +9,5 @@ namespace Test01 {
         public string Name { get;  init; } = string.Empty;//学生の名前
         public string Subject { get; init; } = string.Empty;//科目名
         public int Score { get; init; }//点数
-
     }
 }
