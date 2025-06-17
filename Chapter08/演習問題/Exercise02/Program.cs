@@ -21,8 +21,13 @@
             if (!abbrs.Remove("NPT")) {
                 Console.WriteLine("存在しない用語です");
             }
+            Console.WriteLine();
             //8.2.4(3文字の省略後だけ全て出力)
-            
+            Console.WriteLine("三文字の短縮後のみを出力します。");
+            var query = abbrs.GetAll().Where(x => x.Key.Length == 3);
+            foreach (var words in query) {
+                Console.WriteLine($"{words.Key}:{words.Value}");
+            }
         }
     }
 }
