@@ -10,11 +10,11 @@ namespace Exercise01 {
         }
 
         private static void DisplayDatePattern1(DateTime dateTime) {
-            Console.WriteLine(string.Format("{0:yyyy/MM/dd hh:mm}",dateTime));
+            Console.WriteLine(string.Format("{0:yyyy/MM/dd HH:mm}",dateTime));
         }
 
         private static void DisplayDatePattern2(DateTime dateTime) {
-            Console.WriteLine(dateTime.ToString("yyyy年MM月dd日 hh時mm分ss秒"));
+            Console.WriteLine(dateTime.ToString("yyyy年MM月dd日 HH時mm分ss秒"));
         }
 
         private static void DisplayDatePattern3(DateTime dateTime) {
