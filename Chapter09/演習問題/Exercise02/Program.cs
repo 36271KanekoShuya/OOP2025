@@ -10,7 +10,7 @@ namespace Exercise02 {
         }
         // 9.2.1を呼び出すテスト用メソッド
         private static void Exercise1_1() {
-            var dt = new DateTime(2024, 7, 1);
+            var dt = DateTime.Today;
             foreach (var dayofweek in Enum.GetValues(typeof(DayOfWeek))) {
                 Console.Write("{0:yyyy/MM/dd}の次週の{1}: ", dt, (DayOfWeek)dayofweek);
                 Console.WriteLine("{0:yyyy/MM/dd(ddd)}", NextWeek(dt, (DayOfWeek)dayofweek));
@@ -19,7 +19,7 @@ namespace Exercise02 {
 
         // 9.2.1を呼び出すテスト用メソッド
         private static void Exercise1_2() {
-            var dt = new DateTime(2024, 8, 29);
+            var dt = DateTime.Today;
             foreach (var dayofweek in Enum.GetValues(typeof(DayOfWeek))) {
                 Console.Write("{0:yyyy/MM/dd}の次週の{1}: ", dt, (DayOfWeek)dayofweek);
                 Console.WriteLine("{0:yyyy/MM/dd(ddd)}", NextWeek(dt, (DayOfWeek)dayofweek));
@@ -28,7 +28,7 @@ namespace Exercise02 {
 
         // 9.2.1【ここにプログラムを作成する】
         static DateTime NextWeek(DateTime date, DayOfWeek dayOfWeek) {
-            var day = (int)dayOfWeek - (int)date.DayOfWeek +7;
+            var day = (int)dayOfWeek - (int)date.DayOfWeek + 7;
             return date.AddDays(day);
         }
 
