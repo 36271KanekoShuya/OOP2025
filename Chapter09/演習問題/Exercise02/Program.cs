@@ -28,7 +28,7 @@ namespace Exercise02 {
 
         // 9.2.1【ここにプログラムを作成する】
         static DateTime NextWeek(DateTime date, DayOfWeek dayOfWeek) {
-            var day = (int)dayOfWeek - (int)date.DayOfWeek;
+            var day = (int)dayOfWeek - (int)date.DayOfWeek +7;
             return date.AddDays(day);
         }
 

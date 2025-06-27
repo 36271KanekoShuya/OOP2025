@@ -13,10 +13,10 @@
 
     class TimeWatch {
         private DateTime _time;
-        
+
         public void Start() {
             //現在の時間を_timeに設定
-            
+
         }
 
         public TimeSpan Stop() {
