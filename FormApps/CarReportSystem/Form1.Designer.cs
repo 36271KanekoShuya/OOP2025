@@ -23,7 +23,8 @@
         ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             Day_label = new Label();
             Writer_label = new Label();
             Maker_label = new Label();
@@ -66,6 +67,7 @@
             cdColor = new ColorDialog();
             sfdReportFileSave = new SaveFileDialog();
             ofdReportFileOpen = new OpenFileDialog();
+            timer1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)dgvRecord).BeginInit();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbPicture).BeginInit();
@@ -248,8 +250,8 @@
             // 
             dgvRecord.AllowUserToAddRows = false;
             dgvRecord.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 255, 255);
-            dgvRecord.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(192, 255, 255);
+            dgvRecord.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             dgvRecord.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvRecord.Location = new Point(123, 419);
             dgvRecord.MultiSelect = false;
@@ -389,39 +391,39 @@
             // tsmiOpen
             // 
             tsmiOpen.Name = "tsmiOpen";
-            tsmiOpen.Size = new Size(180, 22);
+            tsmiOpen.Size = new Size(140, 22);
             tsmiOpen.Text = "開く...";
             tsmiOpen.Click += tsmiOpen_Click;
             // 
             // tsmiSave
             // 
             tsmiSave.Name = "tsmiSave";
-            tsmiSave.Size = new Size(180, 22);
+            tsmiSave.Size = new Size(140, 22);
             tsmiSave.Text = "保存…";
             tsmiSave.Click += tsmiSave_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(137, 6);
             // 
             // tsmiColorOption
             // 
             tsmiColorOption.Name = "tsmiColorOption";
-            tsmiColorOption.Size = new Size(180, 22);
+            tsmiColorOption.Size = new Size(140, 22);
             tsmiColorOption.Text = "色設定…";
             tsmiColorOption.Click += tsmiColorOption_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(137, 6);
             // 
             // tsmiExit
             // 
             tsmiExit.Name = "tsmiExit";
             tsmiExit.ShortcutKeys = Keys.Alt | Keys.F4;
-            tsmiExit.Size = new Size(180, 22);
+            tsmiExit.Size = new Size(140, 22);
             tsmiExit.Text = "終了";
             tsmiExit.Click += tsmiExit_Click;
             // 
@@ -531,5 +533,6 @@
         private ColorDialog cdColor;
         private SaveFileDialog sfdReportFileSave;
         private OpenFileDialog ofdReportFileOpen;
+        private System.Windows.Forms.Timer timer1;
     }
 }

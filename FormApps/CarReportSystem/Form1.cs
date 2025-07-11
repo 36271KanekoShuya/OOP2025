@@ -11,7 +11,7 @@ namespace CarReportSystem {
     public partial class Form1 : Form {
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
 
-        Settings settings = new Settings();
+        Settings settings = Settings.getInstance();
 
         public Form1() {
             InitializeComponent();
