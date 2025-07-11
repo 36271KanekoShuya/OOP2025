@@ -472,6 +472,7 @@
             Controls.Add(Day_label);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
+            FormClosed += Form1_FormClosed;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)dgvRecord).EndInit();
             groupBox1.ResumeLayout(false);

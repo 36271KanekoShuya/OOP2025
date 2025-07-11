@@ -2,15 +2,34 @@ using System.ComponentModel;
 using System.Drawing.Text;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms.VisualStyles;
+using System.Xml;
+using System.Xml.Serialization;
 using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
     public partial class Form1 : Form {
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
 
+        Settings settings = new Settings();
+
         public Form1() {
             InitializeComponent();
             dgvRecord.DataSource = listCarReports;
+            //色設定ファイル読み込み
+            if (File.Exists("setting.xml")) {
+                try {
+                    using (var reader = XmlReader.Create("setting.xml")) {
+                        var serializer = new XmlSerializer(typeof(Settings));
+                        var colorset = serializer.Deserialize(reader) as Settings;
+                        settings = colorset ?? new Settings();
+                        BackColor = Color.FromArgb(settings.MainFormBackColor);
+                    }
+                }
+                catch (Exception ex) {
+                    tsslbMessage.Text = ex.Message;
+                }
+            }
         }
 
         private void btPicOpen_Click(object sender, EventArgs e) {
@@ -53,19 +72,6 @@ namespace CarReportSystem {
             tsslbMessage.Text = "削除完了";
         }
 
-        /// <summary>
-        /// 全ての現在の記入を削除
-        /// </summary>
-        private void ClearAllWriting() {
-            dtpDate.Value = DateTime.Today;
-            cbAuthor.Text = string.Empty;
-            rbOther.Checked = true;
-            rbOther.Checked = false;
-            cbCarName.Text = string.Empty;
-            tbReport.Text = string.Empty;
-            pbPicture.Image = null;
-        }
-
         private void btNewWrite_Click(object sender, EventArgs e) {
             ClearAllWriting();
         }
@@ -94,8 +100,9 @@ namespace CarReportSystem {
         private void tsmiColorOption_Click(object sender, EventArgs e) {
             if (cdColor.ShowDialog() == DialogResult.OK) {
                 BackColor = cdColor.Color;
+                //設定ファイルへ保存
+                settings.MainFormBackColor = cdColor.Color.ToArgb();
             }
-
         }
 
         private void tsmiSave_Click(object sender, EventArgs e) {
@@ -184,6 +191,19 @@ namespace CarReportSystem {
         }
 
         /// <summary>
+        /// 全ての現在の記入を削除
+        /// </summary>
+        private void ClearAllWriting() {
+            dtpDate.Value = DateTime.Today;
+            cbAuthor.Text = string.Empty;
+            rbOther.Checked = true;
+            rbOther.Checked = false;
+            cbCarName.Text = string.Empty;
+            tbReport.Text = string.Empty;
+            pbPicture.Image = null;
+        }
+
+        /// <summary>
         /// 書き込まれた情報をCarReport型のリストに入れて返します。
         /// </summary>
         /// <returns></returns>
@@ -200,7 +220,7 @@ namespace CarReportSystem {
         }
 
         /// <summary>
-        /// ファイルをセーブします
+        /// ファイルをバイナリ形式でセーブします
         /// </summary>
         private void reportSaveFile() {
             if (sfdReportFileSave.ShowDialog() == DialogResult.OK) {
@@ -215,15 +235,15 @@ namespace CarReportSystem {
 
                     }
                 }
-                catch (Exception e) {
+                catch (Exception ex) {
 
-                    tsslbMessage.Text = "ファイル書き出しエラー"+ e.Message;
+                    tsslbMessage.Text = "ファイル書き出しエラー" + ex.Message;
                 }
             }
         }
 
         /// <summary>
-        /// ファイルを読み込みます
+        /// バイナリファイルを読み込みます
         /// </summary>
         private void reportOpenFile() {
             if (ofdReportFileOpen.ShowDialog() == DialogResult.OK) {
@@ -233,7 +253,7 @@ namespace CarReportSystem {
                     var bf = new BinaryFormatter();
 #pragma warning restore SYSLIB0011 // 型またはメンバーが旧型式です
                     using (FileStream fs = File.Open(ofdReportFileOpen.FileName, FileMode.Open, FileAccess.Read)) {
-                        listCarReports = (BindingList < CarReport >) bf.Deserialize(fs);
+                        listCarReports = (BindingList<CarReport>)bf.Deserialize(fs);
                         dgvRecord.DataSource = listCarReports;
 
                         cbAuthor.Items.Clear();
@@ -246,8 +266,8 @@ namespace CarReportSystem {
 
                     }
                 }
-                catch (Exception e) {
-                    tsslbMessage.Text = "ファイル形式が違います" + e.Message;
+                catch (Exception ex) {
+                    tsslbMessage.Text = "ファイル形式が違います" + ex.Message;
                 }
             }
         }
@@ -257,6 +277,18 @@ namespace CarReportSystem {
 
         }
 
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
+            try {
+                //設定ファイルへ色情報をシリアル化保存する処理
+                using (var Color = XmlWriter.Create("setting.xml")) {
+                    var serializer = new XmlSerializer(settings.GetType());
+                    serializer.Serialize(Color, settings);
+                }
+            }
+            catch (Exception ex) {
+                tsslbMessage.Text = ex.Message;
+            }
 
+        }
     }
 }
