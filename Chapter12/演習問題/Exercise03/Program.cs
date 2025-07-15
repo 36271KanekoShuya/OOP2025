@@ -9,35 +9,32 @@ namespace Exercise03 {
     internal class Program {
         static void Main(string[] args) {
             var employees = Deserialize("employees.json");
-            if (employees is not null) {
-                ToXmlFile(employees);
-            }
+            ToXmlFile(employees);
         }
 
-        static Employee[]? Deserialize(string filePath) {
+        static Employee[] Deserialize(string filePath) {
             var options = new JsonSerializerOptions {
                 WriteIndented = true,
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                NumberHandling =
-                    JsonNumberHandling.AllowNamedFloatingPointLiterals |
-                    JsonNumberHandling.AllowReadingFromString
             };
             var jsonString = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<Employee[]>(jsonString, options);
+            return JsonSerializer.Deserialize<Employee[]>(jsonString, options) ?? [];
 
         }
 
         static void ToXmlFile(Employee[] employees) {
             using (var writer = XmlWriter.Create("employees.xml")) {
-                var serializer = new XmlSerializer(employees.GetType());
+                XmlRootAttribute xRoot = new XmlRootAttribute {
+                    ElementName = "Employees",
+                };
+                var serializer = new XmlSerializer(employees.GetType(),xRoot);
                 serializer.Serialize(writer, employees);
             }
 
         }
     }
 
-    [XmlRoot("Employees")]
     public record Employee {
         public int Id { get; set; }
 
