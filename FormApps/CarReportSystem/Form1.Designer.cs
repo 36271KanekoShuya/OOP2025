@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             Day_label = new Label();
             Writer_label = new Label();
             Maker_label = new Label();
@@ -245,13 +245,14 @@
             tbReport.Name = "tbReport";
             tbReport.Size = new Size(405, 132);
             tbReport.TabIndex = 6;
+            tbReport.TextChanged += tbReport_TextChanged;
             // 
             // dgvRecord
             // 
             dgvRecord.AllowUserToAddRows = false;
             dgvRecord.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(192, 255, 255);
-            dgvRecord.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(192, 255, 255);
+            dgvRecord.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dgvRecord.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvRecord.Location = new Point(123, 419);
             dgvRecord.MultiSelect = false;
