@@ -291,8 +291,5 @@ namespace CarReportSystem {
 
         }
 
-        private void tbReport_TextChanged(object sender, EventArgs e) {
-
-        }
     }
 }

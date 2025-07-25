@@ -245,7 +245,6 @@
             tbReport.Name = "tbReport";
             tbReport.Size = new Size(405, 132);
             tbReport.TabIndex = 6;
-            tbReport.TextChanged += tbReport_TextChanged;
             // 
             // dgvRecord
             // 

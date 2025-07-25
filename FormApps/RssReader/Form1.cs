@@ -23,7 +23,7 @@ namespace RssReader {
             //戻&進ボタンのマスク
             btGoBack.Enabled = wvRssLink.CanGoBack;
             btGoForward.Enabled = wvRssLink.CanGoForward;
-            cbUrl.DataSource = rssUrlDict.Select(x => x.Key).ToList();
+            cbUrl.Items.AddRange(rssUrlDict.Select(x => x.Key).ToArray());
             cbUrl.SelectedIndex = -1;
         }
 
@@ -47,20 +47,25 @@ namespace RssReader {
 
                         lbTitles.Items.Clear();
                         items.ForEach(x => lbTitles.Items.Add(x.Title));
-                        lbErrorCodes.Text = "エラーコードなどがここに";
+                        tsslbMessage.Text = "エラーコードなどがここに";
                     } else return;
                 }
             }
             catch (InvalidOperationException) {
-                lbErrorCodes.Text = "URIがありません";
+                tsslbMessage.Text = "URIがありません";
                 return;
             }
             catch (Exception ex) {
-                lbErrorCodes.Text = ex.Message;
+                tsslbMessage.Text = ex.Message;
                 return;
             }
 
         }
+        /// <summary>
+        /// 辞書に登録してあるものか判別します
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
         private string? getrssUrl(string str) {
             if (rssUrlDict.ContainsKey(str)) {
                 return rssUrlDict[str];
@@ -79,7 +84,7 @@ namespace RssReader {
                 tbSiteUrl.Text = items[lbTitles.SelectedIndex].Link;
             }
             catch (Exception ex) {
-                lbErrorCodes.Text = ex.Message;
+                tsslbMessage.Text = ex.Message;
                 return;
             }
 
@@ -94,36 +99,97 @@ namespace RssReader {
         }
 
         private void btFavorite_Click(object sender, EventArgs e) {
-            if (cbUrl.Items.Contains(cbUrl.Text)) {
-                return;
-            } else if (cbUrl.Text is null) {
-                return;
+            if (IsValidUrl(cbUrl.Text)) {
+                if (cbUrl.Items.Contains(cbUrl.Text)) {
+                    tsslbMessage.Text = "既に登録されています";
+                    return;
+                }
+                if (string.IsNullOrEmpty(cbUrl.Text)) {
+                    tsslbMessage.Text = "空欄です";
+                    return;
+                }
+                if (string.IsNullOrEmpty(tbfavoName.Text)) {
+                    if (rssUrlDict.ContainsValue(cbUrl.Text)) {
+                        tsslbMessage.Text = "既に登録されています";
+                        return;
+                    }
+                    rssUrlDict.Add($"{cbUrl.Text}", cbUrl.Text);
+                    cbUrl.Items.Add(cbUrl.Text);
+                } else {
+                    if (rssUrlDict.ContainsKey(tbfavoName.Text)) {
+                        tsslbMessage.Text = "既に登録されています";
+                        return;
+                    }
+                    rssUrlDict.Add($"{tbfavoName.Text}", cbUrl.Text);
+                    cbUrl.Items.Add(tbfavoName.Text);
+                }
+            } else {
+                tsslbMessage.Text = "URLがありません。";
             }
-            cbUrl.Items.Add(cbUrl.Text);
         }
 
         private void btFavoDelete_Click(object sender, EventArgs e) {
             if (cbUrl.SelectedIndex == -1) {
+                tsslbMessage.Text = "選択されていません";
                 return;
             }
+            rssUrlDict.Remove(cbUrl.SelectedItem.ToString());
             cbUrl.Items.Remove(cbUrl.SelectedItem);
         }
 
-        private void wvRssLink_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e) {
-
-        }
 
         private void wvRssLink_SourceChanged(object sender, Microsoft.Web.WebView2.Core.CoreWebView2SourceChangedEventArgs e) {
             GoBackForwardCheck();
         }
 
+        private void lbTitles_DrawItem(object sender, DrawItemEventArgs e) {
+            var idx = e.Index;                                                      //描画対象の行
+            if (idx == -1) return;                                                  //範囲外なら何もしない
+            var sts = e.State;                                                      //セルの状態
+            var fnt = e.Font;                                                       //フォント
+            var _bnd = e.Bounds;                                                    //描画範囲(オリジナル)
+            var bnd = new RectangleF(_bnd.X, _bnd.Y, _bnd.Width, _bnd.Height);     //描画範囲(描画用)
+            var txt = (string)lbTitles.Items[idx];                                  //リストボックス内の文字
+            var bsh = new SolidBrush(lbTitles.ForeColor);                           //文字色
+            var sel = (DrawItemState.Selected == (sts & DrawItemState.Selected));   //選択行か
+            var odd = (idx % 2 == 1);                                               //奇数行か
+            var fore = Brushes.WhiteSmoke;                                         //偶数行の背景色
+            var bak = Brushes.LightCyan;                                           //奇数行の背景色
+
+            e.DrawBackground();                                                     //背景描画
+
+            //奇数項目の背景色を変える（選択行は除く）
+            if (odd && !sel) {
+                e.Graphics.FillRectangle(bak, bnd);
+            } else if (!odd && !sel) {
+                e.Graphics.FillRectangle(fore, bnd);
+            }
+
+            //文字を描画
+            e.Graphics.DrawString(txt, fnt, bsh, bnd);
+        }
+
         /// <summary>
-        /// 戻・進ボタンの押せるかの判定をし、マスク処理をします
+        /// 戻・進ボタンの押せるかの判定をし、マスク処理をします。
         /// </summary>
         private void GoBackForwardCheck() {
             btGoBack.Enabled = wvRssLink.CanGoBack;
             btGoForward.Enabled = wvRssLink.CanGoForward;
         }
 
+        /// <summary>
+        /// 有効なURLか判別します。
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private static bool IsValidUrl(string url) {
+            Uri? uriResult;
+            return Uri.TryCreate(url, UriKind.Absolute, out uriResult) &&
+                    (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
+
+        }
     }
 }
