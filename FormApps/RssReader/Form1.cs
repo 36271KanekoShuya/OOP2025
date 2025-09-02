@@ -1,7 +1,13 @@
 using System;
 using System.Net;
 using System.Security.Policy;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RssReader {
     public partial class Form1 : Form {
@@ -14,9 +20,13 @@ namespace RssReader {
             {"科学","https://news.yahoo.co.jp/rss/topics/science.xml" },
         };
 
+        string favojson;
         public Form1() {
             InitializeComponent();
-
+            //お気に入り辞書読み込み
+            var options = new JsonSerializerOptions {
+            };
+            //var favo = JsonSerializer.Deserialize<>(text, options);
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -189,7 +199,17 @@ namespace RssReader {
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
-
+            try {
+                //設定ファイルへ色情報をシリアル化保存する処理
+                var options = new JsonSerializerOptions {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                };
+                string jsonString = JsonSerializer.Serialize(rssUrlDict, options);
+            }
+            catch (Exception ex) {
+                tsslbMessage.Text = ex.Message;
+            }
         }
     }
 }

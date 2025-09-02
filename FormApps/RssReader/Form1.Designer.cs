@@ -56,7 +56,7 @@
             btRssGet.Name = "btRssGet";
             btRssGet.Size = new Size(59, 30);
             btRssGet.TabIndex = 1;
-            btRssGet.Text = "読む";
+            btRssGet.Text = "🔍";
             btRssGet.UseVisualStyleBackColor = true;
             btRssGet.Click += btRssGet_Click;
             // 
@@ -100,23 +100,23 @@
             // 
             // btGoBack
             // 
-            btGoBack.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            btGoBack.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             btGoBack.Location = new Point(316, 39);
             btGoBack.Name = "btGoBack";
             btGoBack.Size = new Size(54, 29);
             btGoBack.TabIndex = 6;
-            btGoBack.Text = "戻";
+            btGoBack.Text = "＜＝";
             btGoBack.UseVisualStyleBackColor = true;
             btGoBack.Click += btGoBack_Click;
             // 
             // btGoForward
             // 
-            btGoForward.Font = new Font("Yu Gothic UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 128);
+            btGoForward.Font = new Font("Yu Gothic UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 128);
             btGoForward.Location = new Point(370, 39);
             btGoForward.Name = "btGoForward";
             btGoForward.Size = new Size(54, 29);
             btGoForward.TabIndex = 7;
-            btGoForward.Text = "進";
+            btGoForward.Text = "＞";
             btGoForward.UseVisualStyleBackColor = true;
             btGoForward.Click += btGoForward_Click;
             // 

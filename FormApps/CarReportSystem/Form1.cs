@@ -12,7 +12,6 @@ namespace CarReportSystem {
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
 
         Settings settings = Settings.getInstance();
-
         public Form1() {
             InitializeComponent();
             dgvRecord.DataSource = listCarReports;
