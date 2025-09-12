@@ -16,58 +16,86 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ColorChecker {
-    /// <summary>
+    /// <summar>
     /// MainWindow.xaml の相互作用ロジック
-    /// </summary>
+    /// </summar>
     public partial class MainWindow : Window {
 
-        private ObservableCollection<MyColor> myColors = new ObservableCollection<MyColor>();
-
         MyColor currentcolor;
+
         public MainWindow() {
             InitializeComponent();
-            stockList.ItemsSource = myColors;
-            colorSelectComboBox.DataContext = GetColorList();
+            DataContext = GetColorList();
         }
 
+        private void Window_Loaded(object sender, EventArgs e) {
+            colorSelectComboBox.SelectedItem = new MyColor {
+                Color = Color.FromRgb(0, 0, 0),
+                Name = "Black",
+            };
+        }
 
         private void ColorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
             //colorAreaに指定したRGBの色を表示
-            var backcolor = new MyColor {
+            currentcolor = new MyColor {
                 Color = Color.FromRgb((byte)redColorSlider.Value,
                 (byte)greenColorSlider.Value, (byte)blueColorSlider.Value),
-                Name = null
+                Name = ((MyColor[])DataContext).Where(c =>
+                                                      c.Color.R == (byte)redColorSlider.Value &&
+                                                      c.Color.B == (byte)blueColorSlider.Value &&
+                                                      c.Color.G == (byte)greenColorSlider.Value).Select(x => x.Name).FirstOrDefault(),
             };
-            colorArea.Background = new SolidColorBrush(backcolor.Color);
+            colorArea.Background = new SolidColorBrush(currentcolor.Color);
+            if (currentcolor.Name == null) {
+                colorSelectComboBox.SelectedIndex = -1;
+            } else {
+                if (currentcolor.Name == "Transparent") {
+                    currentcolor = new MyColor {
+                        Color = Color.FromRgb(255, 255, 255),
+                        Name = "White",
+                    };
+                }
+                colorSelectComboBox.SelectedItem = currentcolor;
+            }
+
         }
 
         private void stockButton_Click(object sender, RoutedEventArgs e) {
-            var color = Color.FromRgb((byte)redColorSlider.Value,
-                (byte)greenColorSlider.Value, (byte)blueColorSlider.Value);
-            if (colorSelectComboBox.SelectedItem != null) {
-                var listcolors = new MyColor {
-                    //Color = colorSelectComboBox.Items,
-                };
-            }
-            var colors = new MyColor {
-                Color = color,
-            };
-            //重複の排除
-            if (myColors.Contains(colors)) {
+            //重複排除
+            if (stockList.Items.Contains(currentcolor)) {
+                MassageLabel.Content = "Already stocked.";
                 return;
             } else {
-                myColors.Add(colors);
+                stockList.Items.Add(currentcolor);
+                MassageLabel.Content = "Stock completed.";
             }
 
         }
 
         private void colorSelectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var selemycolor = (MyColor)((ComboBox)sender).SelectedItem;
-            var color = selemycolor.Color;
-            var name = selemycolor.Name;
-            setSliderValue(color);
+            if (((ComboBox)sender).SelectedItem != null) {
+                var selemycolor = (MyColor)((ComboBox)sender).SelectedItem;
+                currentcolor = selemycolor;
+                setSliderValue(selemycolor.Color);
+            }
+
         }
 
+        private void stockList_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (stockList.SelectedItem != null) {
+                var color = (MyColor)stockList.SelectedItem;
+                setSliderValue(color.Color);
+            }
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e) {
+            if (stockList.SelectedItem != null) {
+                stockList.Items.Remove((MyColor)stockList.SelectedItem);
+                MassageLabel.Content = "Delete completed.";
+            } else {
+                MassageLabel.Content = "Already deleted";
+            }
+        }
 
         /// <summary>
         /// すべての色を取得するメソッド
@@ -78,9 +106,9 @@ namespace ColorChecker {
                 .Select(i => new MyColor() { Color = (Color)i.GetValue(null), Name = i.Name }).ToArray();
         }
 
-        /// <summary>
-        /// RGBスライダーの値を変えるメソッド
-        /// </summary>
+        /// <summar>
+        /// RGBスライダ一の値を変えるメソッド
+        /// </summar>
         /// <param name="color"></param>
         private void setSliderValue(Color color) {
             redColorSlider.Value = color.R;
@@ -88,18 +116,5 @@ namespace ColorChecker {
             blueColorSlider.Value = color.B;
         }
 
-        private void stockList_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            //var color = myColors[(stockList.SelectedIndex)];
-
-        }
-
-        private void deleteButton_Click(object sender, RoutedEventArgs e) {
-            //var deleter = ((ListBoxItem)sender).ToString();
-            myColors.Remove((MyColor)stockList.SelectedItem);
-        }
-
-        private void redColorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-
-        }
     }
 }
