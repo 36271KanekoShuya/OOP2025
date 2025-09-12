@@ -18,7 +18,5 @@ namespace CarReportSystem {
             return instance;
         }
 
-        private Settings() { }
-
     }
 }
