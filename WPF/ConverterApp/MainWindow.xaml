@@ -19,7 +19,7 @@
 
         <StackPanel Orientation="Horizontal">
             <TextBox Name="ImperialValue" Margin="4" Width="100"/>
-            <ComboBox Name="ImperialUnit" Margin="4" Width="80"/>
+            <ComboBox Name="ImperialUnit" Margin="4" Width="80" SelectionChanged="ImperialUnit_SelectionChanged"/>
         </StackPanel>
     </StackPanel>
 </Window>
