@@ -17,17 +17,17 @@
                 <RowDefinition Height="2*"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="名前：" Margin="2,0,0,5" FontSize="15" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="0" x:Name="NameTextBox" Margin="50,5,0,5" FontSize="15" VerticalAlignment="Top"/>
-            <Label Grid.Row="0" Content=" TEL：" Margin="2,4,0,5" FontSize="15" VerticalAlignment="Center"/>
-            <TextBox Grid.Row="0" x:Name="PhoneTextBox" Margin="50,5,0,5" FontSize="15" VerticalAlignment="Center"/>
-            <Label Grid.Row="0" Content="住所：" Margin="2,0,0,0" FontSize="15" VerticalAlignment="Bottom"/>
-            <TextBox Grid.Row="0" x:Name="AdressTextBox" Margin="50,5,0,5" FontSize="15" VerticalAlignment="Bottom"/>
+            <Label Grid.Row="0" Content="名前：" Margin="2,3,0,5" FontSize="15" VerticalAlignment="Top"/>
+            <TextBox Grid.Row="0" x:Name="NameTextBox" Margin="50,5,0,5" FontSize="17" VerticalAlignment="Top"/>
+            <Label Grid.Row="0" Content=" TEL：" Margin="2,6,0,5" FontSize="15" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="0" x:Name="PhoneTextBox" Margin="50,5,0,5" FontSize="17" VerticalAlignment="Center"/>
+            <Label Grid.Row="0" Content="住所：" Margin="2,0,0,2" FontSize="15" VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="0" x:Name="AddressTextBox" Margin="50,5,0,5" FontSize="17" VerticalAlignment="Bottom"/>
             
             <Button Grid.Row="1" Content="画像" x:Name="PictureButton" Margin="5,5,0,170" Width="65"
                     Click="PictureButton_Click" HorizontalAlignment="Left" FontSize="17"/>
             <Border Grid.Row="1" Margin="5,50,0,0" BorderBrush="Black" BorderThickness="1">
-                <Image Source="{Binding Picure}" Stretch="None"/>
+                <Image x:Name="PictureBox" Stretch="Fill"/>
             </Border>
             
             <Button Grid.Row="2" Content="保存" x:Name="SaveButton"  Margin="0,10,10,0" Width="70" Height="40"
@@ -40,8 +40,8 @@
                 <RowDefinition Height="7*"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <!--削除ボタン等移動-->
-            <ListView Grid.Column="1" x:Name="PersonListView" Margin="5,5,5,5" SelectionChanged="PersonListView_SelectionChanged">
+            <TextBox Grid.Column="1" x:Name="SearchTextBox" Margin="10" VerticalAlignment="Top" FontSize="15"/>
+            <ListView Grid.Column="1" x:Name="CustomerListView" Margin="5,40,5,5" SelectionChanged="CustomerListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
