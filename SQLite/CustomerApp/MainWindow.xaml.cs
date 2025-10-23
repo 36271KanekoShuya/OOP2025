@@ -25,7 +25,7 @@ namespace CustomerApp {
 
         public MainWindow() {
             InitializeComponent();
-
+            ReadDatabase();
         }
 
         private void ReadDatabase() {
@@ -38,11 +38,11 @@ namespace CustomerApp {
 
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
             if (string.IsNullOrEmpty(NameTextBox.Text)) {
-                MessageBox.Show("名前が未記入です");
+                MessageLabel.Content = "名前が未記入です";
                 return;
             }
             if (_customers.Any(x => x.Phone == PhoneTextBox.Text)) {
-                MessageBox.Show("番号が同じものがあります");
+                MessageLabel.Content = "番号が同じものがあります";
                 return;
             }
             var person = new Customer() {
@@ -57,12 +57,23 @@ namespace CustomerApp {
                 connection.Insert(person);
             }
             ReadDatabase();
+            ClearAllWriting();
+        }
+
+        /// <summary>
+        ///テキストボックス内をすべて消す
+        /// </summary>
+        private void ClearAllWriting() {
+            NameTextBox.Text = string.Empty;
+            PhoneTextBox.Text = string.Empty;
+            AddressTextBox.Text = string.Empty;
+            PictureBox.Source = null;
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e) {
             var item = CustomerListView.SelectedItem as Customer;
             if (item is null) {
-                MessageLabel.Content ="削除するものがありません";
+                MessageLabel.Content = "削除するものがありません";
                 return;
             }
             using (var connection = new SQLiteConnection(App.databasePath)) {
@@ -70,22 +81,30 @@ namespace CustomerApp {
                 connection.Delete(item);
                 MessageLabel.Content = "削除しました";
                 ReadDatabase();
+                ClearAllWriting();
             }
 
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e) {
             var selectedperson = CustomerListView.SelectedItem as Customer;
-            if (selectedperson is null) return;
+            if (selectedperson is null) {
+                MessageLabel.Content = "更新するものがありません";
+                return;
+            }
             using (var connection = new SQLiteConnection(App.databasePath)) {
                 connection.CreateTable<Customer>();
                 var person = new Customer() {
                     Id = selectedperson.Id,
                     Name = NameTextBox.Text,
                     Phone = PhoneTextBox.Text,
+                    Address = AddressTextBox.Text,
+                    Picture = _currentimage
                 };
                 connection.Update(person);
                 ReadDatabase();
+                MessageLabel.Content = "更新しました";
+                ClearAllWriting();
             }
         }
 
@@ -96,7 +115,6 @@ namespace CustomerApp {
                 try {
                     _currentimage = File.ReadAllBytes(ofd.FileName);
 
-                    // バイト配列からBitmapImageを作成して表示
                     using (var ms = new MemoryStream(_currentimage)) {
                         var bitmap = new BitmapImage();
                         bitmap.BeginInit();
@@ -114,20 +132,41 @@ namespace CustomerApp {
         }
 
         private void CustomerListView_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            SaveButton.IsEnabled = false;
             var selecteditem = CustomerListView.SelectedItem as Customer;
             if (selecteditem is null) return;
-            using (var ms = new MemoryStream(selecteditem.Picture)) {
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.StreamSource = ms;
-                bitmap.EndInit();
-                bitmap.Freeze();
-                PictureBox.Source = bitmap;
+            if (selecteditem.Picture is not null) {
+                using (var ms = new MemoryStream(selecteditem.Picture)) {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.StreamSource = ms;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                    _currentimage = selecteditem.Picture;
+                    PictureBox.Source = bitmap;
+                    NameTextBox.Text = selecteditem.Name;
+                    PhoneTextBox.Text = selecteditem.Phone;
+                    AddressTextBox.Text = selecteditem.Address;
+                }
+            } else {
                 NameTextBox.Text = selecteditem.Name;
                 PhoneTextBox.Text = selecteditem.Phone;
-                PictureBox.Source = bitmap;
+                AddressTextBox.Text = selecteditem.Address;
             }
+
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+            var filterList = _customers.Where(x => x.Name.Contains(SearchTextBox.Text));
+
+            CustomerListView.ItemsSource = filterList;
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e) {
+            ClearAllWriting();
+            CustomerListView.SelectedIndex = -1;
+            SaveButton.IsEnabled = true;
         }
     }
 }

@@ -45,12 +45,14 @@ namespace Sample {
             var person = new Person() {
                 Name = NameTextBox.Text,
                 Phone = PhoneTextBox.Text,
+                
             };
 
             using (var connection = new SQLiteConnection(App.databasePath)) {
                 connection.CreateTable<Person>();
                 connection.Insert(person);
             }
+
         }
 
         private void ReadButton_Click(object sender, RoutedEventArgs e) {

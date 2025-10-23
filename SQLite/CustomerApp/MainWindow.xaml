@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CustomerApp"
         mc:Ignorable="d"
-        Title="顧客管理アプリ" Width="600" Height="450" >
+        Title="顧客管理アプリ" Width="650" Height="500" >
     <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="Gray"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="1.5*"/>
@@ -23,16 +26,21 @@
             <TextBox Grid.Row="0" x:Name="PhoneTextBox" Margin="50,5,0,5" FontSize="17" VerticalAlignment="Center"/>
             <Label Grid.Row="0" Content="住所：" Margin="2,0,0,2" FontSize="15" VerticalAlignment="Bottom"/>
             <TextBox Grid.Row="0" x:Name="AddressTextBox" Margin="50,5,0,5" FontSize="17" VerticalAlignment="Bottom"/>
-            
-            <Button Grid.Row="1" Content="画像" x:Name="PictureButton" Margin="5,5,0,170" Width="65"
-                    Click="PictureButton_Click" HorizontalAlignment="Left" FontSize="17"/>
+
+            <Button Grid.Row="1" Content="画像" x:Name="PictureButton" Margin="5,0,0,160" Width="65" Height="45"
+                    Click="PictureButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="17"
+                    Background="White"/>
             <Border Grid.Row="1" Margin="5,50,0,0" BorderBrush="Black" BorderThickness="1">
                 <Image x:Name="PictureBox" Stretch="Fill"/>
             </Border>
-            
+
+            <Button Grid.Row="2" Content="クリア" x:Name="ClearButton"  Margin="10,10,0,0" Width="70" Height="40"
+                    Click="ClearButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="17"
+                    Background="LightPink"/>
             <Button Grid.Row="2" Content="保存" x:Name="SaveButton"  Margin="0,10,10,0" Width="70" Height="40"
-                    Click="SaveButton_Click" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="17"/>
-            <Label Grid.Row="2" Content="" x:Name="MessageLabel" Margin="5" VerticalAlignment="Bottom"/>
+                    Click="SaveButton_Click" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="17"
+                    Background="White"/>
+            <Label Grid.Row="2" Content="" x:Name="MessageLabel" Margin="5" VerticalAlignment="Bottom" FontSize="17" Background="LightGray"/>
 
         </Grid>
         <Grid Grid.Column="1">
@@ -40,24 +48,40 @@
                 <RowDefinition Height="7*"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox Grid.Column="1" x:Name="SearchTextBox" Margin="10" VerticalAlignment="Top" FontSize="15"/>
-            <ListView Grid.Column="1" x:Name="CustomerListView" Margin="5,40,5,5" SelectionChanged="CustomerListView_SelectionChanged">
+            <Label Grid.Column="1" Content="検索：" Margin="0,7,3,3" FontSize="15"/>
+            <TextBox Grid.Column="1" x:Name="SearchTextBox" Margin="50,10,10,10" VerticalAlignment="Top" FontSize="17"
+                     TextChanged="SearchTextBox_TextChanged"/>
+            <ListView x:Name="CustomerListView" Margin="5,40,5,5" SelectionChanged="CustomerListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <Image Source="{Binding Picture}" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding Name}" FontSize="20"/>
-                            <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
-                            <TextBlock Text="{Binding Address}" Foreground="Green"/>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding Picture}" VerticalAlignment="Center" Stretch="Uniform" Width="80" Height="80" Margin="5,0"/>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Top" Orientation="Vertical" >
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <TextBlock Text="名前: " FontWeight="Bold" VerticalAlignment="Center" Margin="0"/>
+                                    <TextBlock Text="{Binding Name}" FontSize="16" VerticalAlignment="Center" Margin="0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <TextBlock Text="TEL: " FontWeight="Bold" VerticalAlignment="Center" Margin="0"/>
+                                    <TextBlock Text="{Binding Phone}" Foreground="Blue" FontSize="16" VerticalAlignment="Center" Margin="0"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0">
+                                    <TextBlock Text="住所: " FontWeight="Bold" VerticalAlignment="Center" Margin="0"/>
+                                    <TextBlock Text="{Binding Address}" Foreground="Green" FontSize="16" VerticalAlignment="Center" Margin="0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label Grid.Row="1" Content="未選択です" Margin="10,5,180,5" FontSize="15" VerticalAlignment="Center"/>
             <Button Grid.Row="1" Content="削除" x:Name="DeleteButton" Margin="0,5,10,5" Width="70" Click="DeleteButton_Click" 
-              Background="Red" Foreground="White" HorizontalAlignment="Right" FontSize="17"/>
+              Background="Red" Foreground="White" HorizontalAlignment="Right" FontSize="25"/>
             <Button Grid.Row="1" Content="更新" x:Name="UpdateButton" Margin="0,5,100,5" Width="70" Click="UpdateButton_Click"
-                     HorizontalAlignment="Right" FontSize="17"/>
+                     HorizontalAlignment="Right" FontSize="17" Background="White"/>
         </Grid>
 
     </Grid>
