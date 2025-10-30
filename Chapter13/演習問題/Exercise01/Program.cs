@@ -67,15 +67,11 @@ namespace Exercise01 {
                     Category = category.Name,
                 })
                 .GroupBy(b => b.Category)
-                .OrderBy(g => g.Key)
-                .Select(g => new {
-                    CategoryName = g.Key,
-                    Books = g.OrderBy(x => x.Title)
-                });
+                .OrderBy(g => g.Key);
 
             foreach (var group in groupedBooks) {
-                Console.WriteLine($"# {group.CategoryName}");
-                foreach (var book in group.Books) {
+                Console.WriteLine($"# {group.Key}");
+                foreach (var book in group) {
                     Console.WriteLine($"   {book.Title}");
                 }
                 Console.WriteLine();
@@ -88,21 +84,17 @@ namespace Exercise01 {
                 book => book.CategoryId,
                 category => category.Id,
                 (book, category) => new {
-                book.Title,
-                Category = category.Name,
-                book.PublishedYear,
+                    book.Title,
+                    Category = category.Name,
+                    book.PublishedYear,
                 })
-                .Where(b => b.Category == "Development")
+                .Where(b => b.Category.Equals("Development"))
                 .GroupBy(b => b.PublishedYear)
-                .OrderBy(g => g.Key)
-                .Select(g => new {
-                    CategoryName = g.Key,
-                    Books = g.OrderBy(x => x.Title)
-                });
+                .OrderBy(g => g.Key);
 
             foreach (var group in groupedBooks) {
-                Console.WriteLine($"# {group.CategoryName}");
-                foreach (var book in group.Books) {
+                Console.WriteLine($"# {group.Key}");
+                foreach (var book in group) {
                     Console.WriteLine($"   {book.Title}");
                 }
             }
