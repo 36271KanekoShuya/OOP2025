@@ -9,16 +9,17 @@ namespace Section03 {
 
         private async void button1_Click(object sender, EventArgs e) {
             toolStripStatusLabel1.Text = "";
-            var elapsed = await Task.Run(() =>DoLongTimeWork());
+            var elapsed = await DoLongTimeWorkAsync(4000);
 
             toolStripStatusLabel1.Text = $"èIóπ {elapsed}É~Éäïb";
         }
 
-        private long DoLongTimeWork() {
+        private async Task<long> DoLongTimeWorkAsync(int y) {
             var sw = Stopwatch.StartNew();
-            System.Threading.Thread.Sleep(5000);
+            await Task.Run(() => System.Threading.Thread.Sleep(y));
             sw.Stop();
             return sw.ElapsedMilliseconds;
         }
+
     }
 }
