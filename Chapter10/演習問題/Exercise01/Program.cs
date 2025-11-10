@@ -9,16 +9,6 @@ namespace Exercise01 {
             CountClass3(filePath);
         }
 
-        private static void CountClass3(string filePath) {
-            Console.WriteLine(File.ReadLines(filePath, Encoding.UTF8)
-                .Count(x => x.Contains("class")));
-        }
-
-        private static void CountClass2(string filePath) {
-            Console.WriteLine(File.ReadAllLines(filePath, Encoding.UTF8)
-                .Count(x => x.Contains("class")));
-        }
-
         private static void CountClass1(string filePath) {
             if (File.Exists(filePath)) {
                 int cnt = 0;
@@ -32,6 +22,16 @@ namespace Exercise01 {
                 }
                 Console.WriteLine(cnt);
             }
+        }
+
+        private static void CountClass2(string filePath) {
+            Console.WriteLine(File.ReadAllLines(filePath, Encoding.UTF8)
+                .Count(x => x.Contains("class")));
+        }
+
+        private static void CountClass3(string filePath) {
+            Console.WriteLine(File.ReadLines(filePath, Encoding.UTF8)
+                .Count(x => x.Contains("class")));
         }
     }
 }
