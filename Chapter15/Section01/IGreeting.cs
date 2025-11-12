@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Section01 {
-    class GreetingBase {
-        public virtual string GetMessage() => "";
+    interface IGreeting {
+        string GetMessage() => "";
     }
 }
