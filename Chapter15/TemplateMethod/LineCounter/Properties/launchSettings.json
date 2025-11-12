@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LineCounter": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\infosys\\Downloads\\吾輩は猫である.txt"
+    }
+  }
+}
