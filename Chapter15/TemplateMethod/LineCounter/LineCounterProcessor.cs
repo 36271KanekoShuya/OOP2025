@@ -13,6 +13,10 @@ namespace LineCounter {
             _count = 0;
             Console.Write("検索する単語を入力＞");
             search = Console.ReadLine();
+            if (!string.IsNullOrEmpty(search)) {
+                Console.WriteLine("入力してください");
+                return;
+            }
         }
 
         protected override void Execute(string line) {
@@ -21,6 +25,6 @@ namespace LineCounter {
             }
         }
 
-        protected override void Terminate() => Console.WriteLine("{0}行", _count);
+        protected override void Terminate() => Console.WriteLine("{0}個", _count);
     }
 }
