@@ -15,8 +15,8 @@ namespace DistanceConverter {
         }
 
         public double Convert(double value) {
-            var meter = From.ToMeter(value);
-            return To.FromMeter(meter);
+            var meter = From.ToMeter(value);//meterへ変換
+            return To.FromMeter(meter); //meterを他単位へ変換
         }
     }
 }
