@@ -20,7 +20,7 @@ namespace TextFileProcessorDI {
         }
 
         public void Terminate() {
-            Console.WriteLine($"{_count}行");
+
         }
     }
 }
