@@ -15,7 +15,7 @@ namespace TextFileProcessorDI {
         public void Execute(string line) {
             _count++;
             if (_count <= 20) {
-                Console.WriteLine(_count + line);
+                Console.WriteLine(_count + "|" + line);
             }
         }
 
